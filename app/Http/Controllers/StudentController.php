@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -32,7 +33,15 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+            'email' => 'required|unique:students,email',
+            'classroom_id' => 'required',
+            'address' => 'required',
+            'DOB' => 'reuired|date',
+            'phone_number' => 'required|regex:^(03\d{9}|3\d{9})$',
+            'subjects' => 'required|array|min:1'
+        ]);
     }
 
     /**
