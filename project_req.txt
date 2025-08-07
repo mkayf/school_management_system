@@ -1,9 +1,14 @@
-Tables:
-Students,
-Profiles,
-Classrooms,
-Subjects,
-student_subject
+Student registration form:
+Name,
+Email,
+Classroom (classroom_id),
+Address,
+DOB,
+Phone number,
+Subject => multiple checkbox (subject_id),
+
+
+3 tables are going to be affected (students, profiles and student_subject). Classrooms and subjects tables will be used just for Foreign keys.
 
 
 1. Student Management Module
