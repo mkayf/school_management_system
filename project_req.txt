@@ -1,3 +1,11 @@
+Tables:
+Students,
+Profiles,
+Classrooms,
+Subjects,
+student_subject
+
+
 1. Student Management Module
 🔍 Purpose:
 Ye module system ka core hoga. Students ke basic info ko manage karna, saath hi unke related profile, classroom, aur subjects ko bhi handle karega.
@@ -116,3 +124,4 @@ Vue mein forms ko modular banayen, jaise ek StudentForm.vue jo add/edit dono ke 
 Validation Laravel aur Vue dono sides par karen
 
 Laravel Resources (API Resources) use karen taake JSON clean mile
+
