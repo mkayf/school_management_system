@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -11,7 +12,19 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        if(!$students){
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to load student data.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Student data fetched successfully.',
+            'data' => $students 
+        ]);
     }
 
     /**
