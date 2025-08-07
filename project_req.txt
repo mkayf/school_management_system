@@ -1,0 +1,118 @@
+1. Student Management Module
+🔍 Purpose:
+Ye module system ka core hoga. Students ke basic info ko manage karna, saath hi unke related profile, classroom, aur subjects ko bhi handle karega.
+
+🔗 Relationships:
+Student ↔ Profile (One-to-One)
+
+Student → Classroom (BelongsTo / Many-to-One)
+
+Student ↔ Subjects (Many-to-Many)
+
+Tables:
+students
+
+id, name, email, classroom_id (foreign key)
+
+profiles
+
+id, student_id (foreign key), address, dob, phone
+
+student_subject (pivot table)
+
+student_id, subject_id
+
+Features:
+Student List View (Show all students)
+
+Add New Student (Form with name, email, classroom, profile info, subjects)
+
+Edit Student (Update student info + profile + subjects)
+
+Delete Student
+
+Student Detail Page (Show profile info, classroom, subjects)
+
+2. Profile Management (Auto Inside Student Module)
+🔍 Purpose:
+Har student ka ek profile hota hai jisme personal details hoti hain.
+
+Key Point:
+Profile table automatically update/create hoga jab student banega ya update hoga.
+
+Aapko alag se profile management UI nahi banana, balki Student form mein ye fields include karni hain.
+
+3. Classroom Management Module
+🔍 Purpose:
+Classes manage karni hain jahan students assigned hote hain.
+
+Relationship:
+Classroom → Students (One-to-Many)
+
+Student belongsTo Classroom
+
+Tables:
+classrooms
+
+id, name, section (optional)
+
+Features:
+List Classrooms
+
+Add/Edit/Delete Classrooms
+
+Classroom Detail Page (Jisme us classroom ke students ki list ho)
+
+4. Subject Management Module
+🔍 Purpose:
+Subjects ko manage karna jo students padhte hain.
+
+Relationship:
+Students ↔ Subjects (Many-to-Many)
+
+Tables:
+subjects
+
+id, name
+
+student_subject (pivot table)
+
+Features:
+List Subjects
+
+Add/Edit/Delete Subjects
+
+Assign Subjects to Students (Multi-select or checkboxes on Student Add/Edit form)
+
+Suggested Workflow Jab Aap Bana Rahe Hon:
+Step 1: Database Design
+Migrations create karen for all tables
+
+Relationships ko foreign keys ke zariye define karen
+
+Step 2: Laravel Models & Relationships
+Har model mein relations define karen (hasOne, belongsTo, belongsToMany, etc.)
+
+Step 3: API Routes & Controllers
+Resource controllers banayen (StudentsController, ClassroomsController, SubjectsController)
+
+CRUD ke liye API endpoints banaen
+
+Step 4: Seeders & Dummy Data
+Kuch dummy data banayen for easy testing
+
+Step 5: Frontend (Vue.js)
+Pages banayen: Students List, Student Form, Classrooms List, Subjects List
+
+Axios se API calls karen
+
+Student form mein profile fields aur subject multi-select include karen
+
+Tips for Smooth Development:
+Eager Loading use karen jab students fetch kar rahe ho taake related data (profile, subjects, classroom) easily mil jaye
+
+Vue mein forms ko modular banayen, jaise ek StudentForm.vue jo add/edit dono ke liye use ho
+
+Validation Laravel aur Vue dono sides par karen
+
+Laravel Resources (API Resources) use karen taake JSON clean mile
