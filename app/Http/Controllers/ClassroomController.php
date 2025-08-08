@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ClassroomController extends Controller
 {
@@ -11,7 +14,20 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        //
+        $classrooms = Classroom::all();
+
+        if ($classrooms->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to load classrooms data.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Student data fetched successfully.',
+            'data' => $classrooms
+        ], 200);
     }
 
     /**
@@ -19,7 +35,49 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|string|min:3',
+            'section' => "required|string"
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $validation->errors()->all()
+            ], 422);
+        }
+
+        $validatedData = $validation->validated();
+
+        DB::beginTransaction();
+
+        try {
+            $classroom = Classroom::create([
+                'name' => $validatedData['name'],
+                'section' => $validatedData['section']
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'new class added succesfully.',
+                'data' => $classroom
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to add new class due to internal server error.',
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
+
+
     }
 
     /**
@@ -27,7 +85,20 @@ class ClassroomController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $classroom = Classroom::find($id);
+
+        if(is_null($classroom)){
+            return response()->json([
+            'success' => false,
+            'message' => 'Classroom not found with this ID.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Classroom: ' . $classroom->name . ' fetched successfully.',
+            'data' => $classroom
+        ], 200);
     }
 
     /**
@@ -35,7 +106,49 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'name' => 'sometimes|string|min:3',
+            'section' => "sometimes|string"
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $validation->errors()->all()
+            ], 422);
+        }
+
+        $validatedData = $validation->validated();
+
+        DB::beginTransaction();
+
+        try {
+
+            $classroom = Classroom::findOrFail($id);
+
+            $classroom->fill($validatedData);
+
+            if($classroom->isDirty()) $classroom->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Student: ' . $classroom->name . ' data updated successfully.',
+                'data' => $classroom
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update classroom due to internal server error.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
     }
 
     /**
