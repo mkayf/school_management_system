@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,6 @@ Route::apiResource('students', StudentController::class);
 
 // Classrooms:
 Route::apiResource('classrooms', ClassroomController::class);
+
+// Subjects:
+Route::apiResource('subjects', SubjectController::class);

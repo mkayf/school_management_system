@@ -135,7 +135,7 @@ class ClassroomController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Student: ' . $classroom->name . ' data updated successfully.',
+                'message' => 'Classroom: ' . $classroom->name . ' data updated successfully.',
                 'data' => $classroom
             ], 201);
 
@@ -155,7 +155,30 @@ class ClassroomController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        //
+    {   
+        DB::beginTransaction();
+
+        try {
+
+            $classroom = Classroom::findOrFail($id);
+
+            $classroom->delete();
+
+            DB::commit();
+
+            return response()->json([
+            'success' => true,
+            'message' => 'Classroom data deleted successfully.'
+            ], 200);
+
+        } catch (\Exception $e) {
+             DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete classroom due to internal server error.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
