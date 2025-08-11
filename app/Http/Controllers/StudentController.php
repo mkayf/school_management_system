@@ -14,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $students = Student::with('classroom:id,name,section')->orderBy('id', 'desc')->get();
         if ($students->isEmpty()) {
             return response()->json([
                 'success' => false,
@@ -78,7 +78,7 @@ class StudentController extends Controller
                 'success' => true,
                 'message' => 'Student registered succesfully.',
                 'data' => $student
-            ], 201);
+            ],  201);
             
         } catch (\Exception $e) {
             DB::rollBack();
@@ -131,7 +131,7 @@ class StudentController extends Controller
             'email' => 'sometimes|unique:students,email',
             'classroom_id' => 'sometimes|exists:classrooms,id',
             'address' => 'sometimes|string',
-            'DOB' => 'sometimes|date',
+            'DOB' => 'sometimes|date',  
             'phone_number' => ['sometimes', 'regex:/^03\d{9}$/'],
             'subject_ids' => 'sometimes|array|min:1',
             'subject_ids.*' => 'exists:subjects,id'
