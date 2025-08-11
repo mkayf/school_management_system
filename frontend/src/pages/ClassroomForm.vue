@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
-import { createNewClassroom, getClassroom } from "@/services/classroomService";
+import { createNewClassroom, deleteClassroom, getClassroom, updateClassroom } from "@/services/classroomService";
 import { useRoute, useRouter } from "vue-router";
 
 const mode = ref("add");
@@ -41,20 +41,55 @@ const fetchClassroomToManage = async () => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Add classroom:
-    try {
-        const response = await createNewClassroom(classroomData);
-        if (!response.data.success) {
+    
+    if(mode.value === 'add'){
+        try {
+            const response = await createNewClassroom(classroomData);
+            if (!response.data.success) {
+                console.log(response.data.message);
+                return;
+            }
+            alert(response.data.message);
+            Object.assign(classroomData, initialState);
+        } catch (e) {
+            console.log(e);
+        }
+        
+        return;
+    }
+
+    // Update classroom:
+
+    try{
+        const response = await updateClassroom(route.params.id, classroomData);        
+        if(!response.data.success){
             console.log(response.data.message);
             return;
         }
         alert(response.data.message);
-        Object.assign(classroomData, initialState);
-    } catch (e) {
+    }
+    catch(e){
         console.log(e);
     }
+    
 };
+
+const handleDelete = async () => {
+    try{
+        const response = await deleteClassroom(route.params.id);
+        if (!response.data.success) {
+            console.log(response.data.message);
+            return;    
+        }
+        alert(response.data.message);
+        router.push('/classrooms');
+    }
+    catch(e){
+        console.log(e);
+    }
+}
 
 onMounted(() => {
     fetchClassroomToManage();
@@ -126,13 +161,14 @@ onMounted(() => {
                     </button>
                     <button
                         v-if="mode === 'manage'"
-                        type="button"
-                        class="w-full bg-blue-900 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 flex items-center justify-center"
+                        type="submit"
+                        class="w-full bg-blue-900 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 flex gap-2 items-center justify-center"
                     >
                         <i class="fa-solid fa-pen"></i> Update
                     </button>
                     <button
                         v-if="mode === 'manage'"
+                        @click="handleDelete"
                         type="button"
                         class="w-full bg-red-800 text-white font-medium py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 flex items-center justify-center"
                     >
