@@ -22,8 +22,8 @@ class DashboardController extends Controller
 
     public function newlyAdmittedStudents(){
         // Get the
-        $students = Student::latest()->limit(5)->get();
-
+        $students = Student::with(['classroom:id,name,section'])->latest()->limit(5)->get();
+    
         if($students->isEmpty()){
             return response()->json([
                 'success' => false,
@@ -36,9 +36,7 @@ class DashboardController extends Controller
             'message' => 'Students data fetched successfully.',
             'data' => $students
         ]);
-
-        
-
+    
     }
 
 }

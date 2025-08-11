@@ -1,10 +1,11 @@
 Student registration form:
 Name,
 Email,
-Classroom (classroom_id),
 Address,
 DOB,
 Phone number,
+Classroom (classroom_id),
+section,
 Subject => multiple checkbox (subject_id),
 
 
