@@ -161,7 +161,7 @@ class ClassroomController extends Controller
         try {
 
             $classroom = Classroom::findOrFail($id);
-
+  
             $classroom->delete();
 
             DB::commit();

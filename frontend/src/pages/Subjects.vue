@@ -47,13 +47,13 @@
                 <!-- Table Body -->
                 <tbody class="bg-white divide-y divide-gray-200">
                     <!-- Row 1 -->
-                    <tr class="hover:bg-gray-50" v-for="subject in subjectsData">
+                    <tr class="hover:bg-gray-50" v-for="subject in subjectsData" :key="subject.id">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ subject.id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subject.name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subject.created_at }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ subject.updated_at }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <Button>Manage</Button>
+                            <Button :to="`/manage-subject/${subject.id}`">Manage</Button>
                         </td>
                     </tr>
                     

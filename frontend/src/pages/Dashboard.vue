@@ -101,14 +101,14 @@ onMounted(() => {
                 <!-- Table Body -->
                 <tbody class="bg-white divide-y divide-gray-200">
                     <!-- Row 1 -->
-                    <tr class="hover:bg-gray-50" v-for="student in newStudentsData">
+                    <tr class="hover:bg-gray-50" v-for="student in newStudentsData" :key="student.id">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ student.id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.classroom.name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.classroom.section }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <Button>Manage</Button>
+                            <Button :to="`/manage-student/${student.id}`">Manage</Button>
                         </td>
                     </tr>
                     

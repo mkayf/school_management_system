@@ -20,7 +20,7 @@ const routes = [
         meta: {mode: 'add'}
     },
     {
-        path: '/manage-student',
+        path: '/manage-student/:id',
         name: 'ManageSudent',
         component: StudentForm,
         meta: {mode: 'manage'}
@@ -37,7 +37,7 @@ const routes = [
         meta: {mode: 'add'}
     },
     {
-        path: '/manage-classroom',
+        path: '/manage-classroom/:id',
         name: 'ManageClassroom',
         component: ClassroomForm,
         meta: {mode: 'manage'}
@@ -54,7 +54,7 @@ const routes = [
         meta: {mode: 'add'}
     },
     {
-        path: '/manage-subject',
+        path: '/manage-subject/:id',
         name: 'ManageSubject',
         component: SubjectForm,
         meta: {mode: 'manage'}

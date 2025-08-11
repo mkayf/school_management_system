@@ -1,0 +1,13 @@
+diff --git a/node_modules/vite/dist/node/chunks/dep-CZAfWeT9.js b/node_modules/vite/dist/node/chunks/dep-CZAfWeT9.js
+index 4059079..aeb23dc 100644
+--- a/node_modules/vite/dist/node/chunks/dep-CZAfWeT9.js
++++ b/node_modules/vite/dist/node/chunks/dep-CZAfWeT9.js
+@@ -2786,7 +2786,7 @@ const requestQuerySplitRE = /\?(?!.*[/|}])/;
+ const requestQueryMaybeEscapedSplitRE = /\\?\?(?!.*[/|}])/;
+ const blankReplacer = (match) => " ".repeat(match.length);
+ function getHash(text, length = 8) {
+-	const h$2 = crypto.hash("sha256", text, "hex").substring(0, length);
++	return crypto.createHash("sha256").update(text).digest("hex").substring(0, 8);
+ 	if (length <= 64) return h$2;
+ 	return h$2.padEnd(length, "_");
+ }
