@@ -12,8 +12,6 @@
     const handleSubmit = () => {
         
     }
-
-
 </script>
 
 <template>
