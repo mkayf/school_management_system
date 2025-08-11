@@ -128,7 +128,7 @@ class StudentController extends Controller
     {
         $validation = Validator::make($request->all(), [
             'name' => 'sometimes|min:3',
-            'email' => 'sometimes|unique:students,email',
+            'email' => 'sometimes|unique:students,email,' . $id,
             'classroom_id' => 'sometimes|exists:classrooms,id',
             'address' => 'sometimes|string',
             'DOB' => 'sometimes|date',  
